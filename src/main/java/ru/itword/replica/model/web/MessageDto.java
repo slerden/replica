@@ -7,7 +7,6 @@ import java.util.Map;
  * Created by Itword on 23.07.2017.
  */
 public class MessageDto {
-    private boolean success;
     private Object content;
     private Map<String, String> fieldErrors;
     private List<String> errors;
@@ -15,14 +14,6 @@ public class MessageDto {
 
     public Object getContent() {
         return content;
-    }
-
-    public boolean isSuccess() {
-        return success;
-    }
-
-    public void setSuccess(boolean success) {
-        this.success = success;
     }
 
     public void setContent(Object content) {

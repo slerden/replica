@@ -11,6 +11,7 @@ import org.apache.http.entity.mime.content.FileBody;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.params.CoreProtocolPNames;
 import org.apache.http.util.EntityUtils;
+import ru.itword.replica.service.ByteConversationService;
 
 
 public class TestUpload {
@@ -39,4 +40,5 @@ public class TestUpload {
 
         httpclient.getConnectionManager().shutdown();
     }
+
 }

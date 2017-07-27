@@ -9,12 +9,16 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
 import ru.itword.replica.model.enums.FileExtension;
 import ru.itword.replica.service.api.FileService;
+import ru.itword.replica.service.validation.enums.MesssageSourceAttribute;
 
 /**
  * Created by Itword on 23.07.2017.
  */
 @Component("fileValidator")
 public class FileValidator implements Validator{
+
+    private final static String ERROR_ATTRIBUE = MesssageSourceAttribute.ERROR.getAttribute();
+    private final static String MESSAGE_ATTRIBUE = MesssageSourceAttribute.MESSAGE.getAttribute();
 
     @Autowired
     FileService fileService;
@@ -25,13 +29,24 @@ public class FileValidator implements Validator{
 
     public void validate(Object o, Errors errors) {
         if(o == null) {
-            errors.reject("errors.null");
+            errors.reject(ERROR_ATTRIBUE+"null");
             return;
         }
-        MultipartFile file = (MultipartFile)o;
+        MultipartFile file = ((CommonsMultipartFile)o);
         if(file.isEmpty()) {
-            errors.reject("errors.file.empty");
+            errors.reject(ERROR_ATTRIBUE+"file.empty");
         }
-        if(fileService.getFileExtension(file.getOriginalFilename()) == null) errors.reject("errors.file.extension.wrong");
+        if(!isAcceptableFileExtension(file.getOriginalFilename())) {
+            errors.reject(ERROR_ATTRIBUE+"file.extension.wrong");
+        }
+    }
+
+    private boolean isAcceptableFileExtension(String fileName){
+        for (FileExtension fileExtension : FileExtension.values()) {
+            if (fileName.matches("^.+\\." + fileExtension.name().toLowerCase() + "$")) {
+                return true;
+            }
+        }
+        return false;
     }
 }

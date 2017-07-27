@@ -1,14 +1,18 @@
-package ru.itword.replica.service.validation.resolvers;
+package ru.itword.replica.rest.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.context.i18n.LocaleContextHolder;
-import org.springframework.stereotype.Service;
-import org.springframework.validation.BindingResult;
-import org.springframework.validation.Errors;
+import org.springframework.http.HttpStatus;
 import org.springframework.validation.FieldError;
 import org.springframework.validation.ObjectError;
+import org.springframework.web.bind.annotation.ControllerAdvice;
+import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.web.bind.annotation.RestController;
+import ru.itword.replica.exceptions.ValidationException;
 import ru.itword.replica.model.web.MessageDto;
+import ru.itword.replica.service.validation.enums.MesssageSourceAttribute;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -16,29 +20,27 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * Created by Itword on 23.07.2017.
+ * Created by Itword on 28.07.2017.
  */
-@Service
-public class BindingResultResolverImpl implements BindingResultResolver<MessageDto>{
+@RestController
+@ControllerAdvice
+public class ExceptionHandlingController {
 
-    private final static String ERROR_ATTRIBUE = "error.";
-    private final static String MESSAGE_ATTRIBUE = "message.";
-
+    private final static String ERROR_ATTRIBUE = MesssageSourceAttribute.ERROR.getAttribute();
+    private final static String MESSAGE_ATTRIBUE = MesssageSourceAttribute.MESSAGE.getAttribute();
 
     @Autowired
     private MessageSource messageSource;
 
-    public MessageDto resolveBindingResult(Errors errors) {
-        MessageDto messageDto = new MessageDto();
-        return resolveBindingResult(errors, messageDto);
-    }
-
-    public MessageDto resolveBindingResult(Errors bindingResult, MessageDto messageDto) {
+    @ExceptionHandler(ValidationException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public MessageDto proceedValidationException(ValidationException ex){
+        MessageDto result = new MessageDto();
         Map<String, String> fieldErrors = new HashMap<String, String>();
         List<String> errors = new ArrayList<String>();
         List<String> messages = new ArrayList<String>();
 
-        for (ObjectError objectError : bindingResult.getAllErrors()) {
+        for (ObjectError objectError : ex.getErrors().getAllErrors()) {
             if(objectError instanceof FieldError){
                 fieldErrors.put(((FieldError) objectError).getField(), getMessage(objectError.getCode()));
             }
@@ -49,12 +51,11 @@ public class BindingResultResolverImpl implements BindingResultResolver<MessageD
                 messages.add(getMessage(objectError.getCode()));
             }
         }
-        messageDto.setErrors(errors);
-        messageDto.setFieldErrors(fieldErrors);
-        messageDto.setMessages(messages);
-        return messageDto;
+        result.setErrors(errors);
+        result.setFieldErrors(fieldErrors);
+        result.setMessages(messages);
+        return result;
     }
-
     private String getMessage(String code){
         return messageSource.getMessage(code, null, LocaleContextHolder.getLocale());
     }
