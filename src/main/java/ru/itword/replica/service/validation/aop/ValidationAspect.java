@@ -6,6 +6,8 @@ import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
 import org.aspectj.lang.annotation.Pointcut;
 import org.aspectj.lang.reflect.MethodSignature;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.DirectFieldBindingResult;
 import org.springframework.validation.Errors;
@@ -24,6 +26,10 @@ import java.util.*;
 @Component
 @Aspect
 public class ValidationAspect {
+
+    @Autowired
+    ApplicationContext applicationContext;
+
     @Around(value = "validatedArgPointcut()")
     public Object proceed(ProceedingJoinPoint proceedingJoinPoint) throws Throwable {
         MethodSignature signature = (MethodSignature) proceedingJoinPoint.getSignature();
@@ -44,7 +50,7 @@ public class ValidationAspect {
             Class<? extends Validator>[] value = validatedArg.value();
             DirectFieldBindingResult errors = new DirectFieldBindingResult(o, "obj");
             for (Class<? extends Validator> aClass : value) {
-                Validator validator = aClass.newInstance();
+                Validator validator = applicationContext.getBean(aClass);
                 if(validator.supports(o.getClass())){
                     validator.validate(o, errors);
                 }

@@ -32,7 +32,6 @@ public class GalleryController {
 
 
 
-
     @RequestMapping(value="/upload", method= RequestMethod.POST, consumes = "multipart/form-data")
     public MessageDto handleFileUpload(
            @RequestBody MultipartFile file){

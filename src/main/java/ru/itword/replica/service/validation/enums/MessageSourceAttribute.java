@@ -3,10 +3,10 @@ package ru.itword.replica.service.validation.enums;
 /**
  * Created by Itword on 28.07.2017.
  */
-public enum MesssageSourceAttribute {
-    ERROR("error."), MESSAGE("message.");
+public enum MessageSourceAttribute {
+    ERROR("error."), MESSAGE("message."), FIELD("field.");
 
-    MesssageSourceAttribute(String attribute) {
+    MessageSourceAttribute(String attribute) {
         this.attribute = attribute;
     }
 

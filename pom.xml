@@ -8,7 +8,22 @@
     <artifactId>replica</artifactId>
     <version>1.0-SNAPSHOT</version>
 
+    <properties>
+        <spring-version>4.3.0.RELEASE</spring-version>
+        <spring-security-version>4.2.3.RELEASE</spring-security-version>
+    </properties>
+
     <dependencies>
+        <dependency>
+            <groupId>org.springframework.security</groupId>
+            <artifactId>spring-security-web</artifactId>
+            <version>${spring-security-version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.security</groupId>
+            <artifactId>spring-security-config</artifactId>
+            <version>${spring-security-version}</version>
+        </dependency>
         <dependency>
             <groupId>org.aspectj</groupId>
             <artifactId>aspectjweaver</artifactId>
@@ -20,11 +35,6 @@
             <version>5.2.10.Final</version>
         </dependency>
         <dependency>
-            <groupId>org.hibernate</groupId>
-            <artifactId>hibernate-validator</artifactId>
-            <version>5.3.5.Final</version>
-        </dependency>
-        <dependency>
             <groupId>org.springframework.data</groupId>
             <artifactId>spring-data-jpa</artifactId>
             <version>1.11.4.RELEASE</version>
@@ -34,22 +44,17 @@
             <artifactId>persistence-api</artifactId>
             <version>1.0.2</version>
         </dependency>
-        <dependency>
-            <groupId>javax.validation</groupId>
-            <artifactId>validation-api</artifactId>
-            <version>1.1.0.Final</version>
-        </dependency>
         <!-- https://mvnrepository.com/artifact/org.springframework/spring-webmvc -->
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-webmvc</artifactId>
-            <version>4.3.0.RELEASE</version>
+            <version>${spring-version}</version>
         </dependency>
         <!-- https://mvnrepository.com/artifact/org.springframework.webflow/spring-webflow -->
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-web</artifactId>
-            <version>4.3.0.RELEASE</version>
+            <version>${spring-version}</version>
         </dependency>
         <dependency>
             <groupId>javax.servlet</groupId>

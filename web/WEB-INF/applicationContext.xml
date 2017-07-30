@@ -6,6 +6,7 @@
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
        http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd">
 
+    <import resource="security.xml"/>
 
     <aop:aspectj-autoproxy proxy-target-class="true"/>
     <mvc:resources mapping="/resources/**" location="/resources/" cache-period="10"/>
@@ -24,4 +25,13 @@
         <property name="defaultEncoding" value="UTF-8"/>
     </bean>
 
+    <bean id="conversionService"
+          class="org.springframework.context.support.ConversionServiceFactoryBean">
+        <property name="converters">
+            <set>
+                <bean class="ru.itword.replica.service.conversation.UserDtoToUserConverter"/>
+                <bean class="ru.itword.replica.service.conversation.UserToUserDtoConverter"/>
+            </set>
+        </property>
+    </bean>
 </beans>

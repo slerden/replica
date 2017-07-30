@@ -3,14 +3,13 @@ package ru.itword.replica.service.impl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.DigestUtils;
-import org.springframework.validation.Validator;
 import org.springframework.web.multipart.MultipartFile;
 import ru.itword.replica.dao.FileEntityDao;
 import ru.itword.replica.model.entity.FileEntity;
 import ru.itword.replica.model.enums.FileExtension;
 import ru.itword.replica.service.ByteConversationService;
 import ru.itword.replica.service.api.FileService;
-import ru.itword.replica.service.validation.FileValidator;
+import ru.itword.replica.service.validation.validators.FileValidator;
 import ru.itword.replica.service.validation.aop.ValidatedArg;
 
 /**

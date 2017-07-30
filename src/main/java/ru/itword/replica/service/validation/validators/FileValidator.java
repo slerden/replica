@@ -1,15 +1,14 @@
-package ru.itword.replica.service.validation;
+package ru.itword.replica.service.validation.validators;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
-import org.springframework.validation.ValidationUtils;
 import org.springframework.validation.Validator;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
 import ru.itword.replica.model.enums.FileExtension;
 import ru.itword.replica.service.api.FileService;
-import ru.itword.replica.service.validation.enums.MesssageSourceAttribute;
+import ru.itword.replica.service.validation.enums.MessageSourceAttribute;
 
 /**
  * Created by Itword on 23.07.2017.
@@ -17,8 +16,8 @@ import ru.itword.replica.service.validation.enums.MesssageSourceAttribute;
 @Component("fileValidator")
 public class FileValidator implements Validator{
 
-    private final static String ERROR_ATTRIBUE = MesssageSourceAttribute.ERROR.getAttribute();
-    private final static String MESSAGE_ATTRIBUE = MesssageSourceAttribute.MESSAGE.getAttribute();
+    private final static String ERROR_ATTRIBUE = MessageSourceAttribute.ERROR.getAttribute();
+    private final static String MESSAGE_ATTRIBUE = MessageSourceAttribute.MESSAGE.getAttribute();
 
     @Autowired
     FileService fileService;

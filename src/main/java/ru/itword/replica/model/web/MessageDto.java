@@ -7,8 +7,16 @@ import java.util.Map;
  * Created by Itword on 23.07.2017.
  */
 public class MessageDto {
+
+    public MessageDto() {
+    }
+
+    public MessageDto(Object content) {
+        this.content = content;
+    }
+
     private Object content;
-    private Map<String, String> fieldErrors;
+    private Map<String, List<String>> fieldErrors;
     private List<String> errors;
     private List<String> messages;
 
@@ -20,11 +28,11 @@ public class MessageDto {
         this.content = content;
     }
 
-    public Map<String, String> getFieldErrors() {
+    public Map<String, List<String>> getFieldErrors() {
         return fieldErrors;
     }
 
-    public void setFieldErrors(Map<String, String> fieldErrors) {
+    public void setFieldErrors(Map<String, List<String>> fieldErrors) {
         this.fieldErrors = fieldErrors;
     }
 

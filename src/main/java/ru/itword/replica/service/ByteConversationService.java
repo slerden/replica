@@ -2,7 +2,7 @@ package ru.itword.replica.service;
 
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
-import ru.itword.replica.service.validation.FileValidator;
+import ru.itword.replica.service.validation.validators.FileValidator;
 import ru.itword.replica.service.validation.aop.ValidatedArg;
 
 /**
