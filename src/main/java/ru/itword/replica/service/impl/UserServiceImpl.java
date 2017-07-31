@@ -34,6 +34,7 @@ public class UserServiceImpl implements UserService {
         HashSet<Role> roles = new HashSet<>();
         roles.add(roleDao.findByName(DEFAULT_USER_ROLE));
         user.setRoles(roles);
+        user.setPassword(encodePassword(user.getPassword()));
         return userDao.save(user);
     }
 
